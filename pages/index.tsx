@@ -20,10 +20,16 @@ const Home: NextPage<HomeProps> = ({ collections }) => {
 
       <h1 className="mb-10 text-4xl font-extralight">
         The{" "}
-        <span className="font-extrabold underline decoration-sky-600/50">
-          DiceBots
-        </span>{" "}
-        NFT Marketplace
+        <a
+          href="https://avatars.dicebear.com/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="font-extrabold underline decoration-sky-600/50">
+            DiceBear
+          </span>{" "}
+          NFT Marketplace
+        </a>
       </h1>
 
       <main className="bg-slate-100 p-10 shadow-xl shadow-sky-400/20">

@@ -39,10 +39,16 @@ const NFTDropPage: NextPage = () => {
         <header className="flex items-center justify-between">
           <h1 className="w-52 cursor-pointer font-extralight sm:w-80">
             The{" "}
-            <span className="font-extrabold underline decoration-sky-600/50">
-              DiceBots
-            </span>{" "}
-            NFT Marketplace
+            <a
+              href="https://avatars.dicebear.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="font-extrabold underline decoration-sky-600/50">
+                DiceBear
+              </span>{" "}
+              NFT Marketplace
+            </a>
           </h1>
 
           <button
