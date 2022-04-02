@@ -48,6 +48,21 @@ const NFTDropPage: NextPage = () => {
         <hr className="my-2 border" />
 
         {/* Content */}
+        <div className="mt-10 flex flex-1 flex-col items-center space-y-6 lg:justify-center lg:space-y-0">
+          <img
+            src="/images/dicebots-logo.png"
+            alt=""
+            className="w-80 object-cover pb-10"
+          />
+
+          <h1 className="text-center text-3xl font-bold lg:text-5xl lg:font-extrabold">
+            The DiceBots Fight Club
+          </h1>
+
+          <p className="pt-2 text-xl text-green-500">
+            32 / 50 NFT&apos;s Claimed
+          </p>
+        </div>
 
         {/* Mint Button */}
       </div>
