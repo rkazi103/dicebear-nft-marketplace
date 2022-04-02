@@ -1,11 +1,15 @@
-import { createCurrentUserHook, createClient } from "next-sanity";
+import { createCurrentUserHook, createClient, ClientConfig } from "next-sanity";
 import createImageUrlBuilder from "@sanity/image-url";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
-export const config = {
+export const config: ClientConfig = {
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   apiVersion: "2021-03-25",
   useCdn: process.env.NODE_ENV === "production",
 };
 
-// https://youtu.be/BOy7lOVU8Zo?t=2020
+export const client = createClient(config);
+
+export const urlFor = (source: SanityImageSource) =>
+  createImageUrlBuilder(config).image(source);
