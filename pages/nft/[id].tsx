@@ -28,6 +28,29 @@ const NFTDropPage: NextPage = () => {
           </div>
         </div>
       </div>
+
+      <div className="flex flex-1 flex-col p-12 lg:col-span-6">
+        {/* Header */}
+        <header className="flex items-center justify-between">
+          <h1 className="w-52 cursor-pointer font-extralight sm:w-80">
+            The{" "}
+            <span className="font-extrabold underline decoration-sky-600/50">
+              DiceBots
+            </span>{" "}
+            NFT Marketplace
+          </h1>
+
+          <button className="rounded-full bg-sky-400 px-4 py-2 text-xs font-bold text-white lg:px-5 lg:py-3 lg:text-base">
+            Sign In
+          </button>
+        </header>
+
+        <hr className="my-2 border" />
+
+        {/* Content */}
+
+        {/* Mint Button */}
+      </div>
     </div>
   );
 };
