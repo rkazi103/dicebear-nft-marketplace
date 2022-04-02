@@ -1,8 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import { NextPage } from "next";
 import Head from "next/head";
+import { useMetamask, useDisconnect, useAddress } from "@thirdweb-dev/react";
+import walletShortener from "../../lib/walletShortener";
 
 const NFTDropPage: NextPage = () => {
+  const connectWithMetamask = useMetamask();
+  const disconnect = useDisconnect();
+  const address = useAddress();
+
   return (
     <div className="flex min-h-screen grid-cols-10 flex-col lg:grid">
       <Head>
@@ -30,7 +36,6 @@ const NFTDropPage: NextPage = () => {
       </div>
 
       <div className="flex flex-1 flex-col p-12 lg:col-span-6">
-        {/* Header */}
         <header className="flex items-center justify-between">
           <h1 className="w-52 cursor-pointer font-extralight sm:w-80">
             The{" "}
@@ -40,14 +45,21 @@ const NFTDropPage: NextPage = () => {
             NFT Marketplace
           </h1>
 
-          <button className="rounded-full bg-sky-400 px-4 py-2 text-xs font-bold text-white lg:px-5 lg:py-3 lg:text-base">
-            Sign In
+          <button
+            className="rounded-full bg-sky-400 px-4 py-2 text-xs font-bold text-white hover:bg-sky-500 lg:px-5 lg:py-3 lg:text-base"
+            onClick={() => (address ? disconnect() : connectWithMetamask())}
+          >
+            {address ? "Sign Out" : "Sign In"}
           </button>
         </header>
 
         <hr className="my-2 border" />
+        {address && (
+          <p className="text-center text-sm text-sky-600">
+            You&apos;re logged in with wallet address {walletShortener(address)}
+          </p>
+        )}
 
-        {/* Content */}
         <div className="mt-10 flex flex-1 flex-col items-center space-y-6 lg:justify-center lg:space-y-0">
           <img
             src="/images/dicebots-logo.png"
@@ -64,7 +76,9 @@ const NFTDropPage: NextPage = () => {
           </p>
         </div>
 
-        {/* Mint Button */}
+        <button className="mt-10 h-16 w-full rounded-full bg-orange-700 font-bold text-white hover:bg-orange-800">
+          Mint NFT (0.01 ETH)
+        </button>
       </div>
     </div>
   );
