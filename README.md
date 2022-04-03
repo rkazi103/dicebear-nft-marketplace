@@ -14,6 +14,10 @@ I used the [DiceBear](https://avatars.dicebear.com/) avatars to create a Web 3.0
 
 **Server:** Sanity CMS, Thirdweb
 
+## Demo
+
+Click [here](https://dicebear-nft-marketplace.vercel.app/) to view a demo of the app!
+
 
 ## Environment Variables
 
