@@ -23,10 +23,12 @@ const NFTDropPage: NextPage<NFTDropProps> = ({ collection }) => {
   const connectWithMetamask = useMetamask();
   const disconnect = useDisconnect();
   const address = useAddress();
+  const nftDrop = useNFTDrop(collection.address);
+
   const [claimedSupply, setClaimedSupply] = useState(0);
   const [totalSupply, setTotalSupply] = useState<BigNumber | null>(null);
-  const nftDrop = useNFTDrop(collection.address);
   const [loading, setLoading] = useState(true);
+  const [price, setPrice] = useState<string>("");
 
   useEffect(() => {
     if (!nftDrop) return;
@@ -36,9 +38,11 @@ const NFTDropPage: NextPage<NFTDropProps> = ({ collection }) => {
 
       const claimed = await nftDrop.getAllClaimed();
       const total = await nftDrop.totalSupply();
+      const claimPhases = await nftDrop.claimConditions.getAll();
 
       setClaimedSupply(claimed.length);
       setTotalSupply(total);
+      setPrice(claimPhases?.[0].currencyMetadata.displayValue);
       setLoading(false);
     };
 
@@ -134,8 +138,21 @@ const NFTDropPage: NextPage<NFTDropProps> = ({ collection }) => {
           )}
         </div>
 
-        <button className="mt-10 h-16 w-full rounded-full bg-orange-700 font-bold text-white hover:bg-orange-800">
-          Mint NFT (0.01 ETH)
+        <button
+          disabled={
+            loading || claimedSupply === totalSupply?.toNumber() || !address
+          }
+          className="mt-10 h-16 w-full rounded-full bg-orange-700 font-bold text-white hover:bg-orange-800 disabled:bg-gray-400"
+        >
+          {loading ? (
+            <>Loading</>
+          ) : claimedSupply === totalSupply?.toNumber() ? (
+            <>Sold Out!</>
+          ) : !address ? (
+            <>Sign in to Mint</>
+          ) : (
+            <span className="font-bold">Mint NFT ({price} ETH)</span>
+          )}
         </button>
       </div>
     </div>
