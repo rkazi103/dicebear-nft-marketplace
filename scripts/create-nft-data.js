@@ -52,7 +52,7 @@ const getNft = () => {
 
 for (let i = 0; i < 50; i++) nfts.push(getNft());
 
-(async () => {
+(() => {
   if (nfts === [] || nfts == null || nfts == undefined)
     console.log("🛑 No NFTs found.");
   else console.log("🤖 NFTs found:", nfts.length);
