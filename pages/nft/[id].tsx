@@ -14,6 +14,7 @@ import { Collection } from "../../types/Collection";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BigNumber } from "ethers";
+import Modal from "../../components/Modal";
 
 type NFTDropProps = {
   collection: Collection;
@@ -29,6 +30,8 @@ const NFTDropPage: NextPage<NFTDropProps> = ({ collection }) => {
   const [totalSupply, setTotalSupply] = useState<BigNumber | null>(null);
   const [loading, setLoading] = useState(true);
   const [price, setPrice] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [image, setImage] = useState("");
 
   useEffect(() => {
     if (!nftDrop) return;
@@ -49,12 +52,30 @@ const NFTDropPage: NextPage<NFTDropProps> = ({ collection }) => {
     fetchNFTDropData();
   }, [nftDrop]);
 
+  const mintNFT: React.MouseEventHandler<HTMLButtonElement> = e => {
+    e.preventDefault();
+    if (!nftDrop || !address) return;
+    setLoading(true);
+
+    nftDrop
+      .claimTo(address, 1)
+      .then(async tx => {
+        const claimedNFT = await tx[0].data();
+        setImage(claimedNFT.metadata.image as string);
+        setOpen(true);
+      })
+      .catch(err => console.error(err))
+      .finally(() => setLoading(false));
+  };
+
   return (
     <div className="flex min-h-screen grid-cols-10 flex-col lg:grid">
       <Head>
         <title>DiceBots NFT Drop</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      {open && <Modal open={open} setOpen={setOpen} image={image} />}
 
       <div className="bg-gradient-to-tl from-orange-400 to-sky-400 lg:col-span-4">
         <div className="flex flex-col items-center justify-center py-2 lg:min-h-screen">
@@ -139,6 +160,7 @@ const NFTDropPage: NextPage<NFTDropProps> = ({ collection }) => {
         </div>
 
         <button
+          onClick={mintNFT}
           disabled={
             loading || claimedSupply === totalSupply?.toNumber() || !address
           }
