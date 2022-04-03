@@ -1,23 +1,79 @@
-# Next.js + Tailwind CSS Example
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+# DiceBear NFT Marketplace
 
-## Deploy your own
+I used the [DiceBear](https://avatars.dicebear.com/) avatars to create a Web 3.0 app where you can mint your own NFT!
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+## Authors
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+- [@rkazi103](https://www.github.com/rkazi103)
 
-## How to use
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+## Tech Stack
+
+**Client:** Next JS, Tailwind CSS
+
+**Server:** Sanity CMS, Thirdweb
+
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`NEXT_PUBLIC_SANITY_PROJECT_ID`
+
+`NEXT_PUBLIC_SANITY_DATASET`
+
+`SANITY_API_TOKEN`
+
+If you want to run the scripts to create your own smart contracts on Thirdweb, you will also need
+
+`PRIVATE_KEY`
+
+`ALCHEMY_API_URL`
+## Features
+
+- Authentication with Metamask Wallet
+- Fully Mobile Responsive
+- Full NFT Minting Functionality 
+
+
+## Run Locally
+
+Clone the project
 
 ```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-# or
-pnpm create next-app -- --example with-tailwindcss with-tailwindcss-app
+  git clone https://github.com/rkazi103/dicebear-nft-marketplace
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+Go to the project directory
+
+```bash
+  cd dicebear-nft-marketplace
+```
+
+Install dependencies for Next JS Frontend
+
+```bash
+  yarn
+```
+
+Install dependencies for Sanity CMS Backend
+
+```bash
+cd studio && yarn
+```
+
+Start the Next JS Server
+
+```bash
+  yarn dev
+```
+
+Start the Sanity studio
+
+```bash
+cd studio && sanity start
+```
+
+## License
+[GNU General Public License](https://github.com/rkazi103/ig-ui-app/blob/main/LICENSE) © 2022 [Rayan Kazi](https://github.com/rkazi103)
