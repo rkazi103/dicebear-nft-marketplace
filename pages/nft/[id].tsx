@@ -15,6 +15,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BigNumber } from "ethers";
 import Modal from "../../components/Modal";
+import toast, { Toaster } from "react-hot-toast";
 
 type NFTDropProps = {
   collection: Collection;
@@ -55,17 +56,42 @@ const NFTDropPage: NextPage<NFTDropProps> = ({ collection }) => {
   const mintNFT: React.MouseEventHandler<HTMLButtonElement> = e => {
     e.preventDefault();
     if (!nftDrop || !address) return;
+
     setLoading(true);
+    const notification = toast.loading("Minting...", {
+      style: {
+        background: "white",
+        color: "green",
+        fontWeight: "bolder",
+        fontSize: "17px",
+        padding: "20px",
+      },
+    });
 
     nftDrop
       .claimTo(address, 1)
       .then(async tx => {
         const claimedNFT = await tx[0].data();
+
         setImage(claimedNFT.metadata.image as string);
         setOpen(true);
       })
-      .catch(err => console.error(err))
-      .finally(() => setLoading(false));
+      .catch(err => {
+        console.error(err);
+        toast("Something went wrong!", {
+          style: {
+            background: "red",
+            color: "white",
+            fontWeight: "bolder",
+            fontSize: "17px",
+            padding: "20px",
+          },
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+        toast.dismiss(notification);
+      });
   };
 
   return (
@@ -74,6 +100,8 @@ const NFTDropPage: NextPage<NFTDropProps> = ({ collection }) => {
         <title>DiceBots NFT Drop</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <Toaster position="bottom-center" />
 
       {open && <Modal open={open} setOpen={setOpen} image={image} />}
 
