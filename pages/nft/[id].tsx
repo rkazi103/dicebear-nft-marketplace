@@ -1,12 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 import { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import { useMetamask, useDisconnect, useAddress } from "@thirdweb-dev/react";
+import {
+  useMetamask,
+  useDisconnect,
+  useAddress,
+  useNFTDrop,
+} from "@thirdweb-dev/react";
 import walletShortener from "../../lib/walletShortener";
 import { client, urlFor } from "../../lib/sanity";
 import { groq } from "next-sanity";
 import { Collection } from "../../types/Collection";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { BigNumber } from "ethers";
 
 type NFTDropProps = {
   collection: Collection;
@@ -16,6 +23,27 @@ const NFTDropPage: NextPage<NFTDropProps> = ({ collection }) => {
   const connectWithMetamask = useMetamask();
   const disconnect = useDisconnect();
   const address = useAddress();
+  const [claimedSupply, setClaimedSupply] = useState(0);
+  const [totalSupply, setTotalSupply] = useState<BigNumber | null>(null);
+  const nftDrop = useNFTDrop(collection.address);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!nftDrop) return;
+
+    const fetchNFTDropData = async () => {
+      setLoading(true);
+
+      const claimed = await nftDrop.getAllClaimed();
+      const total = await nftDrop.totalSupply();
+
+      setClaimedSupply(claimed.length);
+      setTotalSupply(total);
+      setLoading(false);
+    };
+
+    fetchNFTDropData();
+  }, [nftDrop]);
 
   return (
     <div className="flex min-h-screen grid-cols-10 flex-col lg:grid">
@@ -87,9 +115,23 @@ const NFTDropPage: NextPage<NFTDropProps> = ({ collection }) => {
             {collection.title}
           </h1>
 
-          <p className="pt-2 text-xl text-green-500">
-            32 / 50 NFT&apos;s Claimed
-          </p>
+          {loading ? (
+            <p className="animate-pulse pt-2 text-xl text-green-500">
+              Loading Supply Count...
+            </p>
+          ) : (
+            <p className="pt-2 text-xl text-green-500">
+              {claimedSupply} / {totalSupply?.toString()} NFT&apos;s Claimed
+            </p>
+          )}
+
+          {loading && (
+            <img
+              src="https://cdn.hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif"
+              alt="Loading image"
+              className="h-80 w-80 object-cover"
+            />
+          )}
         </div>
 
         <button className="mt-10 h-16 w-full rounded-full bg-orange-700 font-bold text-white hover:bg-orange-800">
