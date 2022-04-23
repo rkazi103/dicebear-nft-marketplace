@@ -53,8 +53,10 @@ const getNft = () => {
 for (let i = 0; i < 50; i++) nfts.push(getNft());
 
 (() => {
-  if (nfts === [] || nfts == null || nfts == undefined)
+  if (nfts === [] || nfts == null || nfts == undefined) {
     console.log("🛑 No NFTs found.");
+    process.exit(1);
+  }
   else console.log("🤖 NFTs found:", nfts.length);
 })();
 
