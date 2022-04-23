@@ -4,13 +4,13 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-if (!process.env.PRIVATE_KEY || process.env.PRIVATE_KEY === "") {
+if (!process.env.PRIVATE_KEY || process.env.PRIVATE_KEY === "") 
   console.log("🛑 Private key not found.");
-}
 
-if (!process.env.ALCHEMY_API_URL || process.env.ALCHEMY_API_URL === "") {
+
+if (!process.env.ALCHEMY_API_URL || process.env.ALCHEMY_API_URL === "") 
   console.log("🛑 Alchemy API URL not found.");
-}
+
 
 const sdk = new ThirdwebSDK(
   new ethers.Wallet(
